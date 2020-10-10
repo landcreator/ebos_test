@@ -12,7 +12,7 @@ setup_system_contracts_and_issue_token(){
 
     # step 2: create system accounts
     sleep .5
-    for account in eosio.token eosio.msig eosio.stake eosio.bpay eosio.vpay eosio.saving
+    for account in eosio.token eosio.msig eosio.stake eosio.saving dyadmin
     do
         echo -e "\n creating $account \n";
         ${!cleos} create account eosio ${account} EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV -p eosio -x 1000
@@ -35,8 +35,8 @@ setup_system_contracts_and_issue_token(){
     # step 6: set contract eosio.system
     sleep .5
     ${!cleos} set contract eosio ${sys_contracts_dir}/eosio.system -x 1000 -p eosio
-    ${!cleos} push action eosio init '[0, "4,'$sym'"]' -p eosio
-
+    ${!cleos} push action eosio init '["4,'$sym'"]' -p eosio
+    ${!cleos} push action eosio setacntfee '["2.0000 '$sym'"]' -p eosio
 }
 setup_system_contracts_and_issue_token chain_a
 
@@ -63,9 +63,7 @@ create_firstaccount(){
 
     echo "create first user account."
     new_keys
-    ${!cleos} system newaccount \
-         --stake-net "10000.0000 "$sym --stake-cpu "10000.0000 "$sym --buy-ram "100.0000 "$sym \
-         eosio firstaccount $pub_key $pub_key -p eosio --transfer
+    ${!cleos} system newaccount --stake-cpu "10000.0000 "$sym --stake-net "0 "$sym --buy-ram "0 "$sym eosio firstaccount $pub_key $pub_key -p eosio --transfer
     ${!cleos} transfer eosio firstaccount "10000000.0000 "$sym
     import_key $pri_key
 }
@@ -79,9 +77,7 @@ create_account(){
 
     name=$2
     new_keys
-    ${!cleos} system newaccount \
-        --stake-net "10000.0000 "$sym --stake-cpu "10000.0000 "$sym --buy-ram "100.0000 "$sym \
-        firstaccount $name $pub_key $pub_key -p firstaccount
+    ${!cleos} system newaccount --stake-cpu "10000.0000 "$sym --stake-net "0 "$sym --buy-ram "0 "$sym firstaccount $name $pub_key $pub_key -p firstaccount
     ${!cleos} transfer firstaccount $name "10000.0000 "$sym
     import_key $pri_key
 }
@@ -93,8 +89,7 @@ create_account_by_pub_key(){
 
     name=$2
     pub_key=$3
-    ${!cleos} system newaccount \
-        --stake-net "10000.0000 "$sym --stake-cpu "10000.0000 "$sym --buy-ram "100.0000 "$sym \
-        firstaccount $name $pub_key $pub_key -p firstaccount
+    ${!cleos} system newaccount --stake-cpu "10000.0000 "$sym --stake-net "0 "$sym --buy-ram "0 "$sym firstaccount $name $pub_key $pub_key -p firstaccount
     ${!cleos} transfer firstaccount $name "10000.0000 "$sym
 }
+
