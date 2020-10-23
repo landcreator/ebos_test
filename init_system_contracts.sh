@@ -35,24 +35,24 @@ setup_system_contracts_and_issue_token(){
     # step 6: set contract eosio.system
     sleep .5
     ${!cleos} set contract eosio ${sys_contracts_dir}/eosio.system -x 1000 -p eosio
-    ${!cleos} push action eosio init '["4,'$sym'"]' -p eosio
+    ${!cleos} push action eosio init '[0,"4,'$sym'"]' -p eosio
     ${!cleos} push action eosio setacntfee '["2.0000 '$sym'"]' -p eosio
 }
 setup_system_contracts_and_issue_token chain_a
 
 
-sleep .2
-upgrade_consensus(){
-    char=`echo $1 | cut -c 7`
-    cleos=cleos_${char}
-
-    head_num=`${!cleos} get info |jq .head_block_num`
-    target_num=$((head_num+110))
-    ${!cleos} push action eosio setupgrade '{"up":{"target_block_num":'${target_num}'}}' -p eosio
-
-}
-upgrade_consensus chain_a
-
+#sleep .2
+#upgrade_consensus(){
+#    char=`echo $1 | cut -c 7`
+#    cleos=cleos_${char}
+#
+#    head_num=`${!cleos} get info |jq .head_block_num`
+#    target_num=$((head_num+110))
+#    ${!cleos} push action eosio setupgrade '{"up":{"target_block_num":'${target_num}'}}' -p eosio
+#
+#}
+#upgrade_consensus chain_a
+#
 
 sleep .2
 create_firstaccount(){

@@ -1,0 +1,37 @@
+
+version: "3"
+services:
+  nodeosd:
+    #image: boscore/bos:latest
+    image: vchengsong/eos:v1.8.14
+    command: nodeos -e -p eosio
+      --plugin eosio::producer_plugin
+      --plugin eosio::producer_api_plugin
+      --plugin eosio::chain_api_plugin
+      --plugin eosio::http_plugin
+      --plugin eosio::state_history_plugin
+      --filter-on="*"
+      --chain-state-history
+      --trace-history
+      --state-history-endpoint=0.0.0.0:8003
+      --disable-replay-opts
+      --access-control-allow-origin='*'
+      --contracts-console
+      --max-transaction-time 1000
+      --http-validate-host=false
+      --http-server-address=0.0.0.0:8888
+      --chain-state-db-size-mb=4000
+      --abi-serializer-max-time-ms=10000
+      --verbose-http-errors
+    hostname: nodeosd
+    container_name: nodeosd
+    #restart: always
+    network_mode: bridge
+    ports:
+      - "4002:8888"
+      - "8003:8003"
+    environment:
+      - TZ=Asia/Shanghai
+      - I18N_LOCALE=zh-CN
+    #volumes:
+    #  - /data/docker/eosio/nodeosd:/root/.local/share/eosio/nodeos/

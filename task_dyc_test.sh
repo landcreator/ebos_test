@@ -13,5 +13,8 @@ ${!cleos} push action eosio setacntype "[firstaccoun1,none]" -p dyadmin
 
 ${!cleos} push action eosio regproducer
 
-${!cleos} system newaccount  --stake-cpu "10000.0000 --stake-net "0 "$sym "$sym --buy-ram "0 "$sym firstaccount $name $pub_key $pub_key -p firstaccount
+name=firstaccoun5
+pub_key=EOS5CuGSsDBTmdwd6sXiC5wTwYvStFKaxVnwxHyEWvzzq6TE58C5t
+${!cleos} system newaccount --stake-cpu "10000.0000 "$sym --stake-net "0 "$sym --buy-ram "0 "$sym firstaccount $name $pub_key $pub_key -p firstaccount
+
 
