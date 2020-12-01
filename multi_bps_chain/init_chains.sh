@@ -22,8 +22,8 @@ create_big_voter(){
     cleos=cleos_a sym=${chain_a_token_sym} && if [ "$1" == "chain_b" ];then cleos=cleos_b sym=${chain_b_token_sym} ;fi
 
     create_account $1 eosvoterbig1
-    ${!cleos} transfer eosio eosvoterbig1 "200000100.0000 "$sym -p eosio
-    ${!cleos} system delegatebw eosvoterbig1 eosvoterbig1 "100000000.0000 "$sym  "100000000.0000 "$sym -p eosvoterbig1
+    $cleos transfer eosio eosvoterbig1 "200000100.0000 "$sym -p eosio
+    $cleos system delegatebw eosvoterbig1 eosvoterbig1 "100000000.0000 "$sym  "100000000.0000 "$sym -p eosvoterbig1
 }
 create_big_voter chain_a
 create_big_voter chain_b
@@ -36,7 +36,7 @@ create_register_producers(){
         sfx=${bunch}${i}
         bpname=producer${base}1${sfx} && create_account $1 ${bpname}
         var=p${sfx}_pri && if [ "$3" == "import" ];then import_key ${!var}; fi
-        var=p${sfx}_pub && ${!cleos} system regproducer ${bpname} ${!var} http://${bpname}.io 8
+        var=p${sfx}_pub && $cleos system regproducer ${bpname} ${!var} http://${bpname}.io 8
     done
 }
 create_register_producers chain_a 1 import

@@ -3,7 +3,7 @@
 # config
 github_account=landcreator
 github_repo_node=ebos
-github_repo_syscontrct=ebos.contracts
+github_repo_syscontrct=ebos.contracts.bos
 
 local_base_dir=~/Code/github.com
 
@@ -19,4 +19,4 @@ core_token_sym=DYC
 
 wallet_dir=~/tmp/eosio/eosio-wallet
 
-cleos_a='cleos -u http://127.0.0.1:4002'
+cleos="${cleos} -u http://127.0.0.1:4002"

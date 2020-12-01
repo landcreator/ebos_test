@@ -1,9 +1,7 @@
-
 version: "3"
 services:
   nodeosd:
-    #image: boscore/bos:latest
-    image: vchengsong/eos:v1.8.14
+    image: vchengsong/bos:v3.0.9
     command: nodeos -e -p eosio
       --plugin eosio::producer_plugin
       --plugin eosio::producer_api_plugin
@@ -25,7 +23,6 @@ services:
       --verbose-http-errors
     hostname: nodeosd
     container_name: nodeosd
-    #restart: always
     network_mode: bridge
     ports:
       - "4002:8888"
@@ -33,5 +30,4 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - I18N_LOCALE=zh-CN
-    #volumes:
-    #  - /data/docker/eosio/nodeosd:/root/.local/share/eosio/nodeos/
+
